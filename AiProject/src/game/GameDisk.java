@@ -5,7 +5,7 @@ public class GameDisk {
 	final int black = 1;
 	final int white = 0;
 	
-	private Color color;
+	public Color color;
 	
 	public GameDisk (Color color){
 		if (color == Color.BLACK){
