@@ -27,6 +27,7 @@ public class Game {
 	
 	public void applyMove(int row, int col){
 		gameBoard.addDisk(turn, row, col);
+		//catch exception for illegal move, if caught, don't switch turn
 	}
 	
 	public static void main(String[] args) {
@@ -38,9 +39,9 @@ public class Game {
 			game.gameBoard.displayBoard();
 			
 			System.out.println("Enter row:");
-			int row = reader.nextInt();
+			int row = reader.nextInt() - 1;
 			System.out.println("Enter col:");
-			int col = reader.nextInt();
+			int col = reader.nextInt() - 1;
 			
 			game.applyMove(row, col);
 			game.switchTurn();
