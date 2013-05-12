@@ -5,39 +5,45 @@ public class GameDisk {
 	final int black = 1;
 	final int white = 0;
 	
-	private int color;
+	private Color color;
 	
-	public GameDisk (int color){
-		if (color == black){
-			this.color = black;
+	public GameDisk (Color color){
+		if (color == Color.BLACK){
+			this.color = Color.BLACK;
 		}
-		else if (color == white){
-			this.color = white;
-		}
-		else {
-			this.color = white;
+		else if (color == Color.WHITE){
+			this.color = Color.WHITE;
 		}
 	}
 	
 	public boolean isBlack(){
-		if (this.color == black){
+		if (this.color == Color.BLACK){
 			return true;
 		}
 		else return false;
 	}
 	
 	public boolean isWhite(){
-		if (this.color == white){
+		if (this.color == Color.WHITE){
 			return true;
 		}
 		else return false;
 	}
 	
-	public boolean equals(int other_color){
-		if (this.color == other_color){
+	public boolean equals(GameDisk other){
+		if (this.color == other.color){
 			return true;
 		}
 		else return false;
+	}
+	
+	public void flip(){
+		if (this.color == Color.BLACK){
+			this.color = Color.WHITE;
+		}
+		else{
+			this.color = Color.BLACK;
+		}
 	}
 	
 }
