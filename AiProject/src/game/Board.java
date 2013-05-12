@@ -5,6 +5,15 @@ import java.util.List;
 
 public class Board {
 
+	private class Location {
+		int row;
+		int column;
+		Location(int row, int column){
+			this.row = row;
+			this.column = column;
+		}
+	}
+	
 	static final int boardSize = 8;
 	
 	//board[row][column]
@@ -28,6 +37,10 @@ public class Board {
 				board[i][j] = Color.EMPTY;
 			}
 		}
+		board[3][4] = Color.BLACK;
+		board[4][3] = Color.BLACK;
+		board[3][3] = Color.WHITE;
+		board[4][4] = Color.WHITE;
 	}
 	
 	public Board(Board oldBoard){
@@ -37,36 +50,16 @@ public class Board {
 			}
 		}
 	}
-	
-	public boolean isMoveLegal(Color color, int row, int column){
-		//check up
-		for(int i = row - 1; i >= 0; i--){
-			boolean surrounding = false;
-			if(board[i][column] == null){
-				break;
-			}
-			if(!colorEquals(board[i][column],color)){ // other persons disk
-				surrounding = true;
-			}
-			else { //same color disk
-				if(surrounding){
-					return true;
-				}
-				else break;
-			}
-		}
-		//check up, right
-		//check right
-		//check down, right
-		//check down
-		//check down, left
-		//check left
-		//check up, left
-		return false;
-	}
-	
+
 	public boolean colorEquals(Color color1, Color color2){
 		if (color1 == color2){
+			return true;
+		}
+		else return false;
+	}
+	
+	public boolean isEmpty(Color color){
+		if (color == Color.EMPTY){
 			return true;
 		}
 		else return false;
@@ -81,112 +74,351 @@ public class Board {
 		}
 	}
 	
+	public boolean isMoveLegal(Color color, int row, int column){
+		boolean surrounding = false;
+		//check up
+		for(int i = row - 1; i >= 0; i--){
+			if(isEmpty(board[i][column])){
+				break;
+			}
+			else if(!colorEquals(board[i][column],color)){ // other persons disk
+				surrounding = true;
+			}
+			else { //same color disk
+				if(surrounding){ //surrounds other players disks
+					return true;
+				}
+				else break;
+			}
+		}
+		//check up, right
+		int row_t = row - 1;
+		int col_t = column + 1;
+		surrounding = false;
+		while(row_t >= 0 && col_t < boardSize){
+			if(isEmpty(board[row_t][col_t])){
+				break;
+			}
+			else if(!colorEquals(board[row_t][col_t],color)){
+				surrounding = true;
+			}
+			else {
+				if(surrounding){
+					return true;
+				}
+				else break;
+			}
+			row_t = row_t - 1;
+			col_t = col_t + 1;
+		}
+		//check right
+		surrounding = false;
+		for(int i = column + 1; i < boardSize; i++){
+			if(isEmpty(board[row][i])){
+				break;
+			}
+			else if(!colorEquals(board[row][i],color)){ // other persons disk
+				surrounding = true;
+			}
+			else { //same color disk
+				if(surrounding){ //surrounds other players disks
+					return true;
+				}
+				else break;
+			}
+		}
+		//check down, right
+		row_t = row + 1;
+		col_t = column + 1;
+		surrounding = false;
+		while(row_t < boardSize && col_t < boardSize){
+			if(isEmpty(board[row_t][col_t])){
+				break;
+			}
+			else if(!colorEquals(board[row_t][col_t],color)){
+				surrounding = true;
+			}
+			else {
+				if(surrounding){
+					return true;
+				}
+				else break;
+			}
+			row_t = row_t + 1;
+			col_t = col_t + 1;
+		}
+		//check down
+		surrounding = false;
+		for(int i = row + 1; i < boardSize; i++){
+			if(isEmpty(board[i][column])){
+				break;
+			}
+			else if(!colorEquals(board[i][column],color)){ // other persons disk
+				surrounding = true;
+				continue;
+			}
+			else { //same color disk
+				if(surrounding){ //surrounds other players disks
+					return true;
+				}
+				else break;
+			}
+		}
+		//check down, left
+		row_t = row + 1;
+		col_t = column - 1;
+		surrounding = false;
+		while(row_t < boardSize && col_t >= 0){
+			if(isEmpty(board[row_t][col_t])){
+				break;
+			}
+			else if(!colorEquals(board[row_t][col_t],color)){
+				surrounding = true;
+			}
+			else {
+				if(surrounding){
+					return true;
+				}
+				else break;
+			}
+			row_t = row_t + 1;
+			col_t = col_t - 1;
+		}
+		//check left
+		surrounding = false;
+		for(int i = column - 1; i >= 0; i--){
+			if(isEmpty(board[row][i])){
+				break;
+			}
+			else if(!colorEquals(board[row][i],color)){ // other persons disk
+				surrounding = true;
+			}
+			else { //same color disk
+				if(surrounding){ //surrounds other players disks
+					return true;
+				}
+				else break;
+			}
+		}
+		//check up, left
+		row_t = row - 1;
+		col_t = column - 1;
+		surrounding = false;
+		while(row_t >= 0 && col_t >= 0){
+			if(isEmpty(board[row_t][col_t])){
+				break;
+			}
+			else if(!colorEquals(board[row_t][col_t],color)){
+				surrounding = true;
+			}
+			else {
+				if(surrounding){
+					return true;
+				}
+				else break;
+			}
+			row_t = row_t - 1;
+			col_t = col_t - 1;
+		}
+		return false;
+	}
+	
+	
 	public void addDisk(Color color, int row, int column){
 		if (board[row][column] == Color.EMPTY){
-			board[row][column] = color;
+			if (isMoveLegal(color, row, column)){
+				board[row][column] = color;
+			}
+			else {
+				System.out.println("Error: illegal move");
+				return; 
+			}
 			//check for move not illegal
 			//if illegal throw exception
 		}
-		else{
+		else {
 			System.out.println("Error: illegal move");
 			return;
 		}
 		
-		List<Integer> toFlip = new LinkedList<Integer>();
+		List<Location> toFlip = new LinkedList<Location>();
 
 		//flip pieces
 		//check up
 		for(int i = row-1; i >= 0; i--){
-			if(board[i][column] == null){
+			if(isEmpty(board[i][column])){
 				toFlip.clear();
 				break;
 			}
-			if(!colorEquals(board[i][column],color)){
-				toFlip.add(i);
+			else if(!colorEquals(board[i][column],color)){
+				toFlip.add(new Location(i,column));
 			}
 			else { // board[row][i].colorEquals(color) == true
 				break;
 			}
 		}
-		for(Integer r : toFlip){
-			flipDisk(r, column);
+		for(Location l : toFlip){
+			flipDisk(l.row, l.column);
 		}
 		toFlip.clear();
+		
 		//check right, up diagonal
-		//check right
-		for(int i = column+1; i < boardSize; i++){
-			if(board[row][i] == null){
+		int row_t = row - 1;
+		int col_t = column + 1;
+		while(row_t >= 0 && col_t < boardSize){
+			if(isEmpty(board[row_t][col_t])){
 				toFlip.clear();
 				break;
 			}
-			if(!colorEquals(board[row][i],color)){
-				toFlip.add(i);
+			else if(!colorEquals(board[row_t][col_t],color)){
+				toFlip.add(new Location(row_t, col_t));
+			}
+			else {
+				break;
+			}
+			row_t = row_t - 1;
+			col_t = col_t + 1;
+		}
+		for(Location l : toFlip){
+			flipDisk(l.row, l.column);
+		}
+		toFlip.clear();
+		
+		//check right
+		for(int i = column+1; i < boardSize; i++){
+			if(isEmpty(board[row][i])){
+				toFlip.clear();
+				break;
+			}
+			else if(!colorEquals(board[row][i],color)){
+				toFlip.add(new Location(row, i));
 			}
 			else { // board[row][i].colorEquals(color) == true
 				break;
 			}
 		}
-		for(Integer c : toFlip){
-			flipDisk(row, c);
+		for(Location l : toFlip){
+			flipDisk(l.row, l.column);
 		}
 		toFlip.clear();
 		//check down, right diagonal
-		//check down
-		for(int i = row+1; i < boardSize; i++){
-			if(board[i][column] == null){
+		row_t = row + 1;
+		col_t = column + 1;
+		while(row_t < boardSize && col_t < boardSize){
+			if(isEmpty(board[row_t][col_t])){
 				toFlip.clear();
 				break;
 			}
-			if(!colorEquals(board[i][column],color)){
-				toFlip.add(i);
+			else if(!colorEquals(board[row_t][col_t],color)){
+				toFlip.add(new Location(row_t, col_t));
+			}
+			else {
+				break;
+			}
+			row_t = row_t + 1;
+			col_t = col_t + 1;
+		}
+		for(Location l : toFlip){
+			flipDisk(l.row, l.column);
+		}
+		toFlip.clear();
+		
+		//check down
+		for(int i = row+1; i < boardSize; i++){
+			if(isEmpty(board[i][column])){
+				toFlip.clear();
+				break;
+			}
+			else if(!colorEquals(board[i][column],color)){
+				toFlip.add(new Location(i, column));
 			}
 			else { // board[row][i].colorEquals(color) == true
 				break;
 			}
 		}
-		for(Integer r : toFlip){
-			flipDisk(r,column);
+		for(Location l : toFlip){
+			flipDisk(l.row, l.column);
 		}
 		toFlip.clear();
 		//check down, left diagonal
-		//check left
-		for(int i = column-1; i >= 0; i--){
-			if(board[row][i] == null){
+		row_t = row + 1;
+		col_t = column - 1;
+		while(row_t < boardSize && col_t >= 0){
+			if(isEmpty(board[row_t][col_t])){
 				toFlip.clear();
 				break;
 			}
-			if(!colorEquals(board[row][i],color)){
-				toFlip.add(i);
+			else if(!colorEquals(board[row_t][col_t],color)){
+				toFlip.add(new Location(row_t, col_t));
+			}
+			else {
+				break;
+			}
+			row_t = row_t + 1;
+			col_t = col_t - 1;
+		}
+		for(Location l : toFlip){
+			flipDisk(l.row, l.column);
+		}
+		toFlip.clear();
+		
+		//check left
+		for(int i = column-1; i >= 0; i--){
+			if(isEmpty(board[row][i])){
+				toFlip.clear();
+				break;
+			}
+			else if(!colorEquals(board[row][i],color)){
+				toFlip.add(new Location(row, i));
 			}
 			else { // board[row][i].colorEquals(color) == true
 				break;
 			}
 		}
-		for(Integer c : toFlip){
-			flipDisk(row,c);
+		for(Location l : toFlip){
+			flipDisk(l.row, l.column);
 		}
 		toFlip.clear();
 		//check up, left diagonal
+		row_t = row - 1;
+		col_t = column - 1;
+		while(row_t >= 0 && col_t >= 0){
+			if(isEmpty(board[row_t][col_t])){
+				toFlip.clear();
+				break;
+			}
+			else if(!colorEquals(board[row_t][col_t],color)){
+				toFlip.add(new Location(row_t, col_t));
+			}
+			else {
+				break;
+			}
+			row_t = row_t - 1;
+			col_t = col_t - 1;
+		}
+		for(Location l : toFlip){
+			flipDisk(l.row, l.column);
+		}
+		toFlip.clear();
+		
 	}
 	
 	public void displayBoard(){
 		String toPrint = "";
+		System.out.println("   1 2 3 4 5 6 7 8");
 		for(int i = 0; i < boardSize; i++){
-			toPrint += "| ";
+			toPrint += Integer.toString(i+1) + "| ";
 			for(int j = 0; j < boardSize; j++){
-				if(board[i][j] == null){
-					toPrint += "- ";
-				}
-				else {
-					switch (board[i][j]){
-						case BLACK:
-							toPrint += "X ";
-							break;
-						case WHITE:
-							toPrint += "O ";
-							break;
-					}
-							
+				switch (board[i][j]){
+					case BLACK:
+						toPrint += "X ";
+						break;
+					case WHITE:
+						toPrint += "O ";
+						break;
+					case EMPTY:
+						toPrint += "- ";
+						break;						
 				}
 			}
 			toPrint += "|";

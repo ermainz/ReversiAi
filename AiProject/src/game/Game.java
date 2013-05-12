@@ -12,10 +12,7 @@ public class Game {
 	
 	public Game(){
 		gameBoard = new Board();
-		gameBoard.addDisk(Color.BLACK, 3, 4);
-		gameBoard.addDisk(Color.BLACK, 4, 3);
-		gameBoard.addDisk(Color.WHITE, 3, 3);
-		gameBoard.addDisk(Color.WHITE, 4, 4);
+
 	}
 	
 	public void switchTurn(){
@@ -23,6 +20,13 @@ public class Game {
 			turn = Color.WHITE;
 		}
 		else turn = Color.BLACK;
+	}
+	
+	public void displayBoard(){
+		if (turn == Color.BLACK){
+			System.out.println("Turn: X");
+		} else System.out.println("Turn: O");
+		gameBoard.displayBoard();
 	}
 	
 	public void applyMove(int row, int col){
@@ -36,7 +40,7 @@ public class Game {
 		Scanner reader = new Scanner(System.in);
 	
 		while(true){
-			game.gameBoard.displayBoard();
+			game.displayBoard();
 			
 			System.out.println("Enter row:");
 			int row = reader.nextInt() - 1;
