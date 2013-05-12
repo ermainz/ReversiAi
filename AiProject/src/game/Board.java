@@ -428,7 +428,26 @@ public class Board {
 		
 		System.out.println();
 
-		
+	}
+	
+	public Score getScoreOfBoard(){
+		int whiteCount = 0;
+		int blackCount = 0;
+		for(int i = 0; i < boardSize; i++){
+			for(int j = 0; j < boardSize; j++){
+				switch(board[i][j]){
+					case BLACK:
+						blackCount++;
+						break;
+					case WHITE:
+						whiteCount++;
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		return new Score(blackCount, whiteCount);
 	}
 	
 }
