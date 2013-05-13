@@ -107,8 +107,7 @@ public class Ai {
 					maxNode = child;
 				}
 			}
-			cur.score = maxNode.score;
-			return cur;
+			return maxNode;
 		} else {
 			Node maxNode = cur.children.get(0);
 			int maxScore = maxNode.score.getBlackScore();
@@ -118,8 +117,7 @@ public class Ai {
 					maxNode = child;
 				}
 			}
-			cur.score = maxNode.score;
-			return cur;
+			return maxNode;
 		}
 	}
 }
