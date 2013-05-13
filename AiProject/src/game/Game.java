@@ -51,13 +51,15 @@ public class Game {
 				numTurns++;
 			}
 			game.displayBoard();
-			
+			/*
 			System.out.println("Enter row:");
 			int row = reader.nextInt() - 1;
 			System.out.println("Enter col:");
 			int col = reader.nextInt() - 1;
 			
 			game.applyMove(row, col);
+			*/
+			Ai.GreedyBFSMove(game.gameBoard);
 			game.switchTurn();
 			numTurns++;
 			if(numTurns >= 64)

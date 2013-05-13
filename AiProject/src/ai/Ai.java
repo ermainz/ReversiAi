@@ -40,7 +40,7 @@ public class Ai {
 	}
 
 	public static void GreedyBFSMove(Board b) {
-		ArrayList<Move> moves = getPossibleMoves(b, Color.WHITE);
+		ArrayList<Move> moves = getPossibleMoves(b, Color.BLACK);
 		Move movetomake = new Move();
 		movetomake.column = 4;
 		movetomake.row = 4;
@@ -49,15 +49,15 @@ public class Ai {
 			Board temp = new Board(b);
 			int k = m.row + 1;
 			int x = m.column + 1;
-			temp.addDisk(Color.WHITE, m.row, m.column);
-			System.out.print(Color.WHITE + " " + k + " " + x + "\n"
+			temp.addDisk(Color.BLACK, m.row, m.column);
+			System.out.print(Color.BLACK + " " + k + " " + x + "\n"
 					+ temp.getScoreOfBoard().getWhiteScore() + "\n");
 			if (temp.getScoreOfBoard().getWhiteScore() > currenthigh) {
 				currenthigh = temp.getScoreOfBoard().getWhiteScore();
 				movetomake = m;
 			}
 		}
-		b.addDisk(Color.WHITE, movetomake.row, movetomake.column);
+		b.addDisk(Color.BLACK, movetomake.row, movetomake.column);
 	}
 
 //	public static void MinimaxMove(Board b) {
