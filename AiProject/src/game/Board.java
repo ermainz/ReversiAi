@@ -1,9 +1,16 @@
 package game;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Board {
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class Board extends JPanel {
 
 	private class Location {
 		int row;
@@ -15,6 +22,8 @@ public class Board {
 	}
 	
 	static final int boardSize = 8;
+	
+	static final int diskSize = 32;
 	
 	//board[row][column]
 	/*
@@ -41,6 +50,8 @@ public class Board {
 		board[4][3] = Color.BLACK;
 		board[3][3] = Color.WHITE;
 		board[4][4] = Color.WHITE;
+		
+		graphicsInit();
 	}
 	
 	public Board(Board oldBoard){
@@ -49,6 +60,16 @@ public class Board {
 				board[i][j] = oldBoard.board[i][j];
 			}
 		}
+		graphicsInit();
+	}
+	
+	public void graphicsInit(){
+		JFrame frame = new JFrame("Reversi");
+		frame.add(this);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(12*diskSize, 16*diskSize);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
 	}
 
 	public boolean colorEquals(Color color1, Color color2){
@@ -427,6 +448,7 @@ public class Board {
 		}
 		
 		System.out.println();
+		repaint();
 
 	}
 	
@@ -448,6 +470,44 @@ public class Board {
 			}
 		}
 		return new Score(blackCount, whiteCount);
+	}
+	
+	public void paint(Graphics g){
+		Graphics g2d = (Graphics2D) g; 
+		//g2d.drawString("Hello", 50, 50);
+		//g2d.fillOval(250, 250, diskSize, diskSize);
+		java.awt.Color white = java.awt.Color.WHITE;
+		java.awt.Color black = java.awt.Color.BLACK;
+		int initial_x = 50;
+		int initial_y = 50;
+		g2d.setColor(black);
+		for(int i = 0; i <= boardSize; i++){
+			g2d.drawLine(initial_x + i*diskSize, initial_y, initial_x + i*diskSize, initial_y + 8*diskSize);
+			if (i < boardSize)
+				g2d.drawString(Integer.toString(i+1), initial_x + i*diskSize + diskSize/2, initial_y - diskSize/4);
+		}
+		for(int i = 0; i <= boardSize; i++){
+			g2d.drawLine(initial_x, initial_y + i*diskSize, initial_x + 8*diskSize, initial_y + i*diskSize);
+			if (i < boardSize)
+				g2d.drawString(Integer.toString(i+1), initial_x-diskSize/2, initial_y + i*diskSize+diskSize*3/4);
+		}
+
+		for(int i = 0; i < boardSize; i++){
+			for(int j = 0; j < boardSize; j++){
+				switch(board[j][i]){
+					case BLACK:
+						g2d.setColor(black);
+						g2d.fillOval(initial_x+(i*diskSize)+1, initial_y+(j*diskSize)+1, diskSize-2, diskSize-2);
+						break;
+					case WHITE:
+						g2d.setColor(white);
+						g2d.fillOval(initial_x+(i*diskSize)+1, initial_y+(j*diskSize)+1, diskSize-2, diskSize-2);
+						break;
+					default:
+						break;
+				}
+			}
+		}
 	}
 	
 }
