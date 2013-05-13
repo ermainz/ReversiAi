@@ -64,12 +64,12 @@ public class Board extends JPanel {
 	}
 	
 	public void graphicsInit(){
-		JFrame frame = new JFrame("Reversi");
+		/*JFrame frame = new JFrame("Reversi");
 		frame.add(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(12*diskSize, 16*diskSize);
 		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+		frame.setVisible(true);*/
 	}
 
 	public boolean colorEquals(Color color1, Color color2){
@@ -251,14 +251,14 @@ public class Board extends JPanel {
 				board[row][column] = color;
 			}
 			else {
-				System.out.println("Error: illegal move");
+				//System.out.println("Error: illegal move");
 				return; 
 			}
 			//check for move not illegal
 			//if illegal throw exception
 		}
 		else {
-			System.out.println("Error: illegal move");
+			//System.out.println("Error: illegal move");
 			return;
 		}
 		
@@ -491,7 +491,7 @@ public class Board extends JPanel {
 		}
 		
 		System.out.println();
-		repaint();
+		//repaint();
 
 	}
 	

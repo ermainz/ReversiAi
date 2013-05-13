@@ -45,7 +45,8 @@ public class Game {
 			if(game.turn == Color.WHITE)
 			{
 				game.displayBoard();
-				Ai.GreedyBFSMove(game.gameBoard);
+				//Ai.GreedyBFSMove(game.gameBoard);
+				Ai.MinimaxMove(game.gameBoard);
 				game.switchTurn();
 				numTurns++;
 			}

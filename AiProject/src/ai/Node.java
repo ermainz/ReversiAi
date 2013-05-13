@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import game.Board;
 import game.Move;
+import game.Score;
 
 public class Node {
 	public Move move;
 	public Board board;
-	public ArrayList<Move> children;
+	public ArrayList<Node> children;
+	public Score score;
 	
 }
