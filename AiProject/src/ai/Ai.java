@@ -66,4 +66,10 @@ public class Ai {
 		}
 		b.addDisk(Color.WHITE, movetomake.row, movetomake.column);
 	}
+	
+	public static void MinimaxMove(Board b)
+	{
+		int totalMoves = b.getScoreOfBoard().getBlackScore() + b.getScoreOfBoard().getWhiteScore();
+		ArrayList<Move> moves = getPossibleMoves(b, Color.WHITE); 
+	}
 }
