@@ -11,5 +11,6 @@ public class Node {
 	public Board board;
 	public ArrayList<Node> children;
 	public Score score;
+	public int numChildren;
 	
 }
