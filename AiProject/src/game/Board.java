@@ -242,7 +242,7 @@ public class Board {
 		}
 		
 		List<Location> toFlip = new LinkedList<Location>();
-
+		boolean seenSameColor = false;
 		//flip pieces
 		//check up
 		for(int i = row-1; i >= 0; i--){
@@ -254,13 +254,18 @@ public class Board {
 				toFlip.add(new Location(i,column));
 			}
 			else { // board[row][i].colorEquals(color) == true
+				seenSameColor = true;
 				break;
 			}
 		}
-		for(Location l : toFlip){
-			flipDisk(l.row, l.column);
+		if(seenSameColor)
+		{
+			for(Location l : toFlip){
+				flipDisk(l.row, l.column);
+			}
 		}
 		toFlip.clear();
+		seenSameColor = false;
 		
 		//check right, up diagonal
 		int row_t = row - 1;
@@ -274,15 +279,20 @@ public class Board {
 				toFlip.add(new Location(row_t, col_t));
 			}
 			else {
+				seenSameColor = true;
 				break;
 			}
 			row_t = row_t - 1;
 			col_t = col_t + 1;
 		}
-		for(Location l : toFlip){
-			flipDisk(l.row, l.column);
+		if(seenSameColor)
+		{
+			for(Location l : toFlip){
+				flipDisk(l.row, l.column);
+			}
 		}
 		toFlip.clear();
+		seenSameColor = false;
 		
 		//check right
 		for(int i = column+1; i < boardSize; i++){
@@ -294,12 +304,18 @@ public class Board {
 				toFlip.add(new Location(row, i));
 			}
 			else { // board[row][i].colorEquals(color) == true
+				seenSameColor = true;
 				break;
 			}
 		}
-		for(Location l : toFlip){
-			flipDisk(l.row, l.column);
+		if(seenSameColor)
+		{
+			for(Location l : toFlip){
+				flipDisk(l.row, l.column);
+			}
 		}
+		toFlip.clear();
+		seenSameColor = false;
 		toFlip.clear();
 		//check down, right diagonal
 		row_t = row + 1;
@@ -313,15 +329,20 @@ public class Board {
 				toFlip.add(new Location(row_t, col_t));
 			}
 			else {
+				seenSameColor = true;
 				break;
 			}
 			row_t = row_t + 1;
 			col_t = col_t + 1;
 		}
-		for(Location l : toFlip){
-			flipDisk(l.row, l.column);
+		if(seenSameColor)
+		{
+			for(Location l : toFlip){
+				flipDisk(l.row, l.column);
+			}
 		}
 		toFlip.clear();
+		seenSameColor = false;
 		
 		//check down
 		for(int i = row+1; i < boardSize; i++){
@@ -333,13 +354,19 @@ public class Board {
 				toFlip.add(new Location(i, column));
 			}
 			else { // board[row][i].colorEquals(color) == true
+				seenSameColor = true;
 				break;
 			}
 		}
-		for(Location l : toFlip){
-			flipDisk(l.row, l.column);
+		if(seenSameColor)
+		{
+			for(Location l : toFlip){
+				flipDisk(l.row, l.column);
+			}
 		}
 		toFlip.clear();
+		seenSameColor = false;
+		
 		//check down, left diagonal
 		row_t = row + 1;
 		col_t = column - 1;
@@ -352,15 +379,20 @@ public class Board {
 				toFlip.add(new Location(row_t, col_t));
 			}
 			else {
+				seenSameColor = true;
 				break;
 			}
 			row_t = row_t + 1;
 			col_t = col_t - 1;
 		}
-		for(Location l : toFlip){
-			flipDisk(l.row, l.column);
+		if(seenSameColor)
+		{
+			for(Location l : toFlip){
+				flipDisk(l.row, l.column);
+			}
 		}
 		toFlip.clear();
+		seenSameColor = false;
 		
 		//check left
 		for(int i = column-1; i >= 0; i--){
@@ -372,13 +404,19 @@ public class Board {
 				toFlip.add(new Location(row, i));
 			}
 			else { // board[row][i].colorEquals(color) == true
+				seenSameColor = true;
 				break;
 			}
 		}
-		for(Location l : toFlip){
-			flipDisk(l.row, l.column);
+		if(seenSameColor)
+		{
+			for(Location l : toFlip){
+				flipDisk(l.row, l.column);
+			}
 		}
 		toFlip.clear();
+		seenSameColor = false;
+		
 		//check up, left diagonal
 		row_t = row - 1;
 		col_t = column - 1;
@@ -391,15 +429,20 @@ public class Board {
 				toFlip.add(new Location(row_t, col_t));
 			}
 			else {
+				seenSameColor = true;
 				break;
 			}
 			row_t = row_t - 1;
 			col_t = col_t - 1;
 		}
-		for(Location l : toFlip){
-			flipDisk(l.row, l.column);
+		if(seenSameColor)
+		{
+			for(Location l : toFlip){
+				flipDisk(l.row, l.column);
+			}
 		}
 		toFlip.clear();
+		seenSameColor = false;
 		
 	}
 	

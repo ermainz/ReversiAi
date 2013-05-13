@@ -2,6 +2,6 @@ package game;
 
 public class Move {
 
-	int row;
-	int column;
+	public int row;
+	public int column;
 }

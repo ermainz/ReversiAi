@@ -2,6 +2,8 @@ package game;
 
 import java.util.Scanner;
 
+import ai.Ai;
+
 public class Game {
 
 	/**
@@ -38,8 +40,15 @@ public class Game {
 		Game game = new Game();
 		
 		Scanner reader = new Scanner(System.in);
-	
+		int numTurns = 4;
 		while(true){
+			if(game.turn == Color.WHITE)
+			{
+				game.displayBoard();
+				Ai.GreedyBFSMove(game.gameBoard);
+				game.switchTurn();
+				numTurns++;
+			}
 			game.displayBoard();
 			
 			System.out.println("Enter row:");
@@ -49,6 +58,12 @@ public class Game {
 			
 			game.applyMove(row, col);
 			game.switchTurn();
+			numTurns++;
+			if(numTurns >= 64)
+			{
+				System.out.println("Final Score: White - " + game.gameBoard.getScoreOfBoard().white_score + " Black - " + game.gameBoard.getScoreOfBoard().black_score);
+				break;
+			}
 			
 		}
 
