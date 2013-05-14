@@ -44,10 +44,10 @@ public class Game {
 		Scanner reader = new Scanner(System.in);
 		// X - Color.BLACK goes 1st
 		// O - Color.WHITE goes 2nd
-		Ai ai_black = new Ai(4, Color.BLACK, Algorithms.MINIMAX);
-		Ai ai_white = new Ai(4, Color.WHITE, Algorithms.MINIMAX);
+		Ai ai_black = new Ai(2, Color.BLACK, Algorithms.GBFS);
+		Ai ai_white = new Ai(5, Color.WHITE, Algorithms.MINIMAX);
 		game.turn = Color.BLACK;
-		int numTurns = 4;
+		
 		while (true) {
 
 
@@ -65,10 +65,12 @@ public class Game {
 			} else {
 				ai_black.MakeMove(game.gameBoard);
 			}
+			ai_white.stats(game.gameBoard.numMovesMade);
+			ai_black.stats(game.gameBoard.numMovesMade);
 			game.switchTurn();
-			numTurns++;
+			
 
-			if (numTurns >= 64) {
+			if (game.gameBoard.numMovesMade >= 64) {
 				System.out.println("Final Score: White - "
 						+ game.gameBoard.getScoreOfBoard().white_score
 						+ " Black - "

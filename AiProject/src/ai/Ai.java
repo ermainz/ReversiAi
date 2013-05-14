@@ -10,11 +10,26 @@ import game.Move;
 import game.Score;
 
 public class Ai {
-
+	public int totalNodesSearched = 0;
+	public int maxNodesSearched = 0;
+	public int nodesSearched = 0;
 	int depthLimit_m;
 	Color color_m;
 	Algorithms algorithm_m;
 
+	public void stats(int numMoves){
+		totalNodesSearched += nodesSearched;//add number of nodes searched i the turn to the AI total
+		if(nodesSearched > maxNodesSearched)
+			maxNodesSearched = nodesSearched;
+		System.out.println("========" + this.color_m + "===========\n"
+							+"Nodes searched this turn: " + this.nodesSearched
+							+"\nTotal Nodes Searched: " + totalNodesSearched
+							+ "\nNumber of Moves: " + numMoves
+							+ "\nMax nodes Searched on a turn: " + maxNodesSearched
+							+ "\nAverage Nodes Searched: " + totalNodesSearched / numMoves);
+		
+	}
+	
 	public Ai(int depthLimit, Color c, Algorithms a) {
 		depthLimit_m = depthLimit;
 		color_m = c;
@@ -51,6 +66,10 @@ public class Ai {
 
 	public void GreedyBFSMove(Board b) {
 		ArrayList<Move> moves = getPossibleMoves(b, color_m);
+		this.nodesSearched = moves.size();
+		this.totalNodesSearched += this.nodesSearched;
+		if(moves.size() > this.maxNodesSearched)
+			this.maxNodesSearched = moves.size();
 		Move movetomake = new Move();
 		movetomake.column = 4;
 		movetomake.row = 4;
@@ -145,6 +164,7 @@ public class Ai {
 			}
 			System.out.println("Num Searched: "
 					+ Integer.toString(moveTree.numChildren));
+			this.nodesSearched = moveTree.numChildren;
 			b.addDisk(color_m, maxNode.move.row, maxNode.move.column);
 		}
 
