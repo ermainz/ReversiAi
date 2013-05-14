@@ -44,33 +44,29 @@ public class Game {
 		Scanner reader = new Scanner(System.in);
 		// X - Color.BLACK goes 1st
 		// O - Color.WHITE goes 2nd
-		Ai ai_black = new Ai(6, Color.BLACK, Algorithms.MINIMAX);
-		Ai ai_white = new Ai(6, Color.WHITE, Algorithms.MINIMAX);
+		Ai ai_black = new Ai(4, Color.BLACK, Algorithms.MINIMAX);
+		Ai ai_white = new Ai(4, Color.WHITE, Algorithms.MINIMAX);
+		game.turn = Color.BLACK;
 		int numTurns = 4;
 		while (true) {
-			// if(game.turn == Color.WHITE) {
-			// Ai.GreedyBFSMove(game.gameBoard);
+
 
 			// }
-			/*
+			/*//HUMAN PLAYER
 			 * System.out.println("Enter row:"); int row = reader.nextInt() - 1;
 			 * System.out.println("Enter col:"); int col = reader.nextInt() - 1;
 			 * 
 			 * game.applyMove(row, col);
 			 */
-			game.displayBoard();
-			//ai_white.MakeMove(game.gameBoard);
-			ai_black.MakeMove(game.gameBoard);
-			game.switchTurn();
-			numTurns++;
 			
 			game.displayBoard();
-			//ai_black.MakeMove(game.gameBoard);
-			ai_white.MakeMove(game.gameBoard);
+			if (game.turn == Color.WHITE){
+				ai_white.MakeMove(game.gameBoard);
+			} else {
+				ai_black.MakeMove(game.gameBoard);
+			}
 			game.switchTurn();
 			numTurns++;
-
-
 
 			if (numTurns >= 64) {
 				System.out.println("Final Score: White - "

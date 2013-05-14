@@ -79,51 +79,6 @@ public class Ai {
 		b.addDisk(color_m, movetomake.row, movetomake.column);
 	}
 
-	public static Node CreateNode(Node cur, Color c, int depth) {
-		if (depth > 6) {
-			return cur;
-		}
-		ArrayList<Move> moves = getPossibleMoves(cur.board, c);
-		cur.children = new ArrayList<Node>();
-		if (moves.size() == 0) {
-			return cur;
-		}
-		for (Move m : moves) {
-			Board tempBoard = new Board(cur.board);
-			Node temp = new Node();
-			tempBoard.addDisk(c, m.row, m.column);
-			temp.board = tempBoard;
-			temp.score = tempBoard.getScoreOfBoard();
-			temp.move = m;
-			if (c == Color.WHITE) {
-				cur.children.add(CreateNode(temp, Color.BLACK, depth + 1));
-			} else {
-				cur.children.add(CreateNode(temp, Color.WHITE, depth + 1));
-			}
-		}
-		if (c == Color.WHITE) {
-			Node maxNode = cur.children.get(0);
-			int maxScore = maxNode.score.getWhiteScore();
-			for (Node child : cur.children) {
-				if (child.score.getWhiteScore() > maxScore) {
-					maxScore = child.score.getWhiteScore();
-					maxNode = child;
-				}
-			}
-			return maxNode;
-		} else {
-			Node maxNode = cur.children.get(0);
-			int maxScore = maxNode.score.getBlackScore();
-			for (Node child : cur.children) {
-				if (child.score.getBlackScore() > maxScore) {
-					maxScore = child.score.getBlackScore();
-					maxNode = child;
-				}
-			}
-			return maxNode;
-		}
-	}
-
 	public Node buildMoveTree(Board b, Color c, int depth) {
 		if (depth > depthLimit_m)
 			return null;
