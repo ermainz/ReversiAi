@@ -47,7 +47,7 @@ public class Game {
 		Ai ai_black = new Ai(0, Color.BLACK, Algorithms.RANDOMGREEDY);
 		Ai ai_white = new Ai(0, Color.WHITE, Algorithms.RANDOMGREEDY);
 		game.turn = Color.BLACK;
-		int numTurns = 4;
+
 		while (true) {
 
 
@@ -65,10 +65,12 @@ public class Game {
 			} else {
 				ai_black.MakeMove(game.gameBoard);
 			}
+			ai_white.stats(game.gameBoard.numMovesMade);
+			ai_black.stats(game.gameBoard.numMovesMade);
 			game.switchTurn();
-			numTurns++;
+			
 
-			if (numTurns >= 64) {
+			if (game.gameBoard.numMovesMade >= 64) {
 				System.out.println("Final Score: White - "
 						+ game.gameBoard.getScoreOfBoard().white_score
 						+ " Black - "

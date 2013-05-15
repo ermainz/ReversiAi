@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Board extends JPanel {
+	
+	public int numMovesMade = 4;
 
 	private class Location {
 		int row;
@@ -249,6 +251,7 @@ public class Board extends JPanel {
 		if (board[row][column] == Color.EMPTY){
 			if (isMoveLegal(color, row, column)){
 				board[row][column] = color;
+				++this.numMovesMade;
 			}
 			else {
 				//System.out.println("Error: illegal move");
