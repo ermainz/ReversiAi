@@ -1,7 +1,7 @@
 package ai;
 
-import java.awt.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import game.Board;
 import game.Color;
@@ -77,6 +77,38 @@ public class Ai {
 			}
 		}
 		b.addDisk(color_m, movetomake.row, movetomake.column);
+	}
+
+	public void RandomGreedyMove(Board b) {
+		ArrayList<Move> moves = getPossibleMoves(b, color_m);
+		List<Move> possibleMoves = new ArrayList<Move>();
+		int highestScore = Integer.MIN_VALUE;
+		for (Move m : moves) {
+			Board temp = new Board(b);
+			temp.addDisk(color_m, m.row, m.column);
+			if (color_m == Color.WHITE) {
+				if (temp.getScoreOfBoard().getWhiteScore() > highestScore) {
+					highestScore = temp.getScoreOfBoard().getWhiteScore();
+					possibleMoves.clear();
+					possibleMoves.add(m);
+				} else if (temp.getScoreOfBoard().getWhiteScore() == highestScore) {
+					possibleMoves.add(m);
+				}
+			} else {
+				if (temp.getScoreOfBoard().getBlackScore() > highestScore) {
+					highestScore = temp.getScoreOfBoard().getBlackScore();
+					possibleMoves.clear();
+					possibleMoves.add(m);
+				} else if (temp.getScoreOfBoard().getBlackScore() == highestScore) {
+					possibleMoves.add(m);
+				}
+			}
+		}
+		if (possibleMoves.size() > 0) {
+			Double index = Math.random() * possibleMoves.size();
+			Move bestMove = possibleMoves.get(index.intValue());
+			b.addDisk(color_m, bestMove.row, bestMove.column);
+		}
 	}
 
 	public Node buildMoveTree(Board b, Color c, int depth) {
@@ -185,8 +217,11 @@ public class Ai {
 		case MINIMAX:
 			MinimaxMove(b);
 			break;
-		case GBFS:
+		case GREEDY:
 			GreedyBFSMove(b);
+			break;
+		case RANDOMGREEDY:
+			RandomGreedyMove(b);
 			break;
 		default:
 			break;
