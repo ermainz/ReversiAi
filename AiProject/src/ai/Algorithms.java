@@ -2,6 +2,7 @@ package ai;
 
 public enum Algorithms {
 	MINIMAX,
-	GBFS,
-	RAND
+	RAND,
+	GREEDY,
+	RANDOMGREEDY
 }

@@ -44,11 +44,10 @@ public class Game {
 		Scanner reader = new Scanner(System.in);
 		// X - Color.BLACK goes 1st
 		// O - Color.WHITE goes 2nd
-		Ai ai_black = new Ai(2, Color.BLACK, Algorithms.RAND);
-		Ai ai_white = new Ai(3, Color.WHITE, Algorithms.MINIMAX);
-		//Ai ai_white = new Ai(3, Color.WHITE, Algorithms.RAND);
+		Ai ai_black = new Ai(0, Color.BLACK, Algorithms.RANDOMGREEDY);
+		Ai ai_white = new Ai(0, Color.WHITE, Algorithms.RANDOMGREEDY);
 		game.turn = Color.BLACK;
-		
+
 		while (true) {
 
 
