@@ -1,11 +1,11 @@
 package ai;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import game.Board;
 import game.Color;
-import game.Game;
 import game.Move;
 import game.Score;
 
@@ -63,9 +63,27 @@ public class Ai {
 		}
 		return moves;
 	}
+	
+	public void randomMoves(Board b){
+		ArrayList<Move> moves = getPossibleMoves(b, color_m);
+		Collections.shuffle(moves);
+		if(moves.size() <= 0)
+			return;
+		
+		this.nodesSearched = 1;
+		this.totalNodesSearched += this.nodesSearched;
+		if(moves.size() > this.maxNodesSearched)
+			this.maxNodesSearched = moves.size();
+		
+		Move movetomake = moves.get(0);
+		
+		b.addDisk(color_m, movetomake.row, movetomake.column);		
+	
+	}
 
 	public void GreedyBFSMove(Board b) {
 		ArrayList<Move> moves = getPossibleMoves(b, color_m);
+		
 		this.nodesSearched = moves.size();
 		this.totalNodesSearched += this.nodesSearched;
 		if(moves.size() > this.maxNodesSearched)
@@ -240,6 +258,8 @@ public class Ai {
 		case GREEDY:
 			GreedyBFSMove(b);
 			break;
+		case RAND:
+			this.randomMoves(b);
 		case RANDOMGREEDY:
 			RandomGreedyMove(b);
 			break;
