@@ -260,6 +260,7 @@ public class Ai {
 			break;
 		case RAND:
 			this.randomMoves(b);
+			break;
 		case RANDOMGREEDY:
 			RandomGreedyMove(b);
 			break;
